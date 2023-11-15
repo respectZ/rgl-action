@@ -1,0 +1,52 @@
+name: "rgl"
+description: "Bedrock Addons compiler pipeline."
+inputs:
+  profile:
+    description: "profile to run"
+    default: "default"
+    required: false
+  github_token:
+    description: "GitHub Token for getting private filters"
+    default: ""
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: setup-git-credentials
+      uses: de-vri-es/setup-git-credentials@v2.0.8
+      if: ${{ inputs.github_token != '' }}
+      with:
+        credentials: https://user:${{ inputs.github_token }}@github.com/
+    - name: deno
+      uses: denoland/setup-deno@v1
+      with:
+        deno-version: vx.x.x
+    - name: nim
+      uses: iffy/install-nim@v4.2.0
+      with:
+        version: stable
+    - name: go
+      uses: actions/setup-go@v4
+      with:
+        go-version: stable
+    - name: list versions
+      shell: bash
+      run: |
+        python --version
+        node -v
+        nim -v
+        java -version
+        deno --version
+        dotnet --list-sdks
+        go version
+    - name: rgl
+      shell: bash
+      run: |
+        curl -fsSL https://raw.githubusercontent.com/ink0rr/rgl/main/scripts/install.sh | sh
+    - name: install
+      shell: bash
+      run: rgl install
+    - name: compile
+      shell: bash
+      run: rgl run ${{inputs.profile}}
