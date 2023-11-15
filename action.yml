@@ -44,6 +44,8 @@ runs:
       shell: bash
       run: |
         curl -fsSL https://raw.githubusercontent.com/ink0rr/rgl/main/scripts/install.sh | sh
+        mv $HOME/.rgl/bin/rgl /usr/local/bin/rgl
+        chmod +x /usr/local/bin/rgl
     - name: install
       shell: bash
       run: rgl install
