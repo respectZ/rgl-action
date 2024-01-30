@@ -48,7 +48,7 @@ runs:
         chmod +x /usr/local/bin/rgl
     - name: install
       shell: bash
-      run: rgl install
+      run: rgl get
     - name: compile
       shell: bash
       run: rgl run ${{inputs.profile}}
