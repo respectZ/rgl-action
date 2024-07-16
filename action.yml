@@ -22,10 +22,6 @@ runs:
       uses: denoland/setup-deno@v1
       with:
         deno-version: vx.x.x
-    - name: nim
-      uses: iffy/install-nim@v4.2.0
-      with:
-        version: stable
     - name: go
       uses: actions/setup-go@v4
       with:
@@ -35,7 +31,6 @@ runs:
       run: |
         python --version
         node -v
-        nim -v
         java -version
         deno --version
         dotnet --list-sdks
